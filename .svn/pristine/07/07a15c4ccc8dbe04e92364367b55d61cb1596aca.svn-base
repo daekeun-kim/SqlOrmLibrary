@@ -1,0 +1,46 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+
+namespace SqlOrmLibrary
+{
+    public interface IORMInterface
+    {        
+        string SetDBconnectionInfo(); //DB connection info 설정하기
+
+        string SetPrimaryField();//DB primary key 지정하기
+        string SetPrimaryMemberVariable(); // Class의 primary 멤버변수명 셋업하기
+        string SetPrimaryValue(); // Class의 primary 값 지정하기
+
+        bool isCombinedPrimaryKey(); // primary key가 두개 이상인지
+        string SetWhereQueryForCombinedPrimaryKey(); // Primary Key가 두개 이상일 때
+
+        string SetTableName();  // class에 사용될 DB 테이블 이름 지정하기        
+        string SetQueryOption();  // Load시 기본적으로 사용될 query 사용하기       
+        string[] SetFieldforNotEdit(); // Edit시 수정이 필요 없는 필드
+        string[] SetVirtualField(); // 실제 DB column에 없는 필드
+        string[] SetFieldforDatetime(); // Date type column
+
+        //ORM DB 입력 전후 이벤트 false일 경우 ORM DB 제어 안함
+        bool BeforeAdd();// DB에서 insert 하기 전 
+        bool BeforeEdit(); // DB에서 update 할 때 사용자입력값외에 default로 들어갈 값 셋업
+        bool BeforeLoad(string inMember);// DB에서 Load 전에 검색값 커스터마이징
+        bool BeforeDelete();// DB에서 Delete 하기 전
+
+        bool AfterAdd();// DB에서 insert 완류 후
+        bool AfterEdit(); // DB에서 update 완료 후
+        bool AfterLoad();// DB에서 Load 완료 후
+        bool AfterDelete();// DB에서 Delete 완료 후
+
+        //server side validation 
+        bool ValidationAdd(out string sMsg);// Create validation 
+        bool ValidationEdit(out string sMsg); // Edit validation 
+        bool ValidationDelete(out string sMsg);// Delete validation 
+
+        object Copy(); // 객체 copy 함수
+
+    }
+
+}

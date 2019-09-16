@@ -1,0 +1,141 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+
+namespace SqlOrmLibrary
+{
+    public interface IORMInterface
+    {   
+        /// <summary>
+        /// ORM 객체의 DB connection string 설정하기
+        /// </summary>
+        /// <returns>DB connection string</returns>
+        string SetDBconnectionInfo();
+        
+        /// <summary>
+        /// ORM 객체의 DB 테이블의 Primary key 필드 설정하기
+        /// </summary>
+        /// <returns></returns>
+        string SetPrimaryField();
+        
+        /// <summary>
+        /// ORM 객체의 Primary key를 갖는 멤버변수명 설정하기
+        /// </summary>
+        /// <returns></returns>
+        string SetPrimaryMemberVariable(); 
+        
+        /// <summary>
+        /// ORM 객체의 Primary 값을 설정하기
+        /// </summary>
+        /// <returns></returns>
+        string SetPrimaryValue(); 
+        
+        /// <summary>
+        /// ORM 객체가 하나 이상의 필드로 구성하여 primary key 값을 갖는 지 지정하기
+        /// </summary>
+        /// <returns></returns>
+        bool isCombinedPrimaryKey(); 
+        
+        /// <summary>
+        /// ORM 객체가 하나 이상의 필드로 primary 값을 갖을 때 where 문자열 설정하기
+        /// ex) and p1 = 'p1' and p2 ='p2'
+        /// where은 제외하고 and로 시작해야함
+        /// </summary>
+        /// <returns></returns>
+        string SetWhereQueryForCombinedPrimaryKey(); // Primary Key가 두개 이상일 때
+        
+        /// <summary>
+        ///  ORM 객체에 사용될 DB 테이블 이름 지정하기  
+        /// </summary>
+        /// <returns></returns>
+        string SetTableName();
+        
+        /// <summary>
+        /// Load시 기본적으로 사용될 where 절 설정하기
+        /// </summary>
+        /// <returns>where p1='p1'</returns>
+        string SetQueryOption();  // Load시 기본적으로 사용될 query 사용하기       
+
+        /// <summary>
+        /// ORM 객체가 update쿼리 실행할 때 수정하지 않을 멤버변수(필드) 지정하기
+        /// </summary>
+        /// <returns></returns>
+        string[] SetFieldforNotEdit(); // Edit시 수정이 필요 없는 필드
+
+        /// <summary>
+        /// 실제 DB테이블에 없는 column이지만 ORM 객체에만 사용하는 가상 필드
+        /// Load(SQL 작성하지 않고 Load)시에는 맵핑이 제외되나 LoadSQL(SQL직접 작성하여 Load) 할 시에는 가상필드에 맵핑된다.
+        /// </summary>
+        /// <returns></returns>
+        string[] SetVirtualField(); // 실제 DB column에 없는 필드
+
+        /// <summary>
+        /// ORM 객체의 멤버 변수 중 DB 테이블의 Date type과 맵핑이 되는 멤버 변수 지정
+        /// </summary>
+        /// <returns></returns>
+        string[] SetFieldforDatetime(); 
+
+        /// <summary>
+        /// DB insert 하기 전에 실행되는 함수
+        /// return 값을 false일 경우 DB 작업하지 않음
+        /// </summary>
+        /// <returns></returns>
+        bool BeforeAdd();//
+        
+        /// <summary>
+        /// DB update 하기 전에 실행되는 함수
+        /// return 값을 false일 경우 DB 작업하지 않음
+        /// </summary>
+        /// <returns></returns>
+        bool BeforeEdit();
+        
+        /// <summary>
+        /// DB delete 하기 전에 실행되는 함수
+        /// </summary>
+        /// <returns></returns>
+        bool BeforeDelete();// DB에서 Delete 하기 전
+
+        /// <summary>
+        /// DB insert 완료 후 실행되는 함수
+        /// </summary>
+        /// <returns></returns>
+        bool AfterAdd();
+
+        /// <summary>
+        /// DB update 완료 후 실행되는 함수
+        /// </summary>
+        /// <returns></returns>
+        bool AfterEdit(); // DB에서 update 완료 후
+
+        /// <summary>
+        /// DB Load(조회) 완료 후 실행되는 함수
+        /// </summary>
+        /// <returns></returns>
+        bool AfterLoad();
+
+        /// <summary>
+        /// DB Delete 완료 후 실행되는 함수
+        /// </summary>
+        /// <returns></returns>
+        bool AfterDelete();// DB에서 Delete 완료 후
+
+        /// <summary>
+        /// DB 작업 중에 오류가 발생했을 때 실행하는 함수
+        /// </summary>
+        /// <param name="e">Error exception 인자</param>
+        /// <param name="iSQL">실행된 SQL</param>
+        void OnError(Exception e,string iSQL); 
+
+        /// <summary>
+        /// DB 작업이 정상적으로 완료되었을 때 실행하는 함수
+        /// </summary>
+        /// <param name="resultSQL">실행된 SQL</param>
+        void OnComplete(string resultSQL);    
+
+        object Copy(); // 객체 copy 함수
+
+    }
+
+}
