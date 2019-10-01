@@ -40,9 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="baseORMCombined.cs" />
+    <Compile Include="clsSQLControl.cs" />
     <Compile Include="clsDBControl_new2.cs" />
+    <Compile Include="EntityMapperSQL.cs" />
     <Compile Include="EntityMapper2.cs" />
+    <Compile Include="SQLSessionFactory.cs" />
     <Compile Include="ORMSessionFactory.cs" />
+    <Compile Include="baseORM.cs" />
     <Compile Include="SEED_ORM.cs" />
     <Compile Include="clsDBControl_new.cs" />
     <Compile Include="EntityMapper.cs" />
